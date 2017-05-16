@@ -63,49 +63,53 @@ public class Plot {
     }
 }
 
-public struct Setting {
-    
-    public var title: String?
-    
-    public var showGrid: Bool = false
-    
-    public var xlabel: String?
-    public var ylabel: String?
-    
-    public var xrange: (Double, Double)?
-    public var yrange: (Double, Double)?
-    
-    public var pointsize: Double?
-    
-    func queries() -> [String] {
-        var ret: [String] = []
+extension Plot {
+    public struct Setting {
         
-        if let title = self.title {
-            ret.append("set title '\(title)'")
-        }
+        public var title: String?
         
-        if showGrid {
-            ret.append("set grid")
-        }
+        public var showGrid: Bool = false
         
-        if let xlabel = self.xlabel {
-            ret.append("set xlabel '\(xlabel)'")
-        }
-        if let ylabel = self.ylabel {
-            ret.append("set ylabel '\(ylabel)'")
-        }
+        public var xlabel: String?
+        public var ylabel: String?
         
-        if let xrange = self.xrange {
-            ret.append("set xrange [\(xrange.0):\(xrange.1)]")
-        }
-        if let yrange = self.yrange {
-            ret.append("set yrange [\(yrange.0):\(yrange.1)]")
-        }
+        public var xrange: (Double, Double)?
+        public var yrange: (Double, Double)?
         
-        if let pointsize = self.pointsize {
-            ret.append("set pointsize \(pointsize)")
-        }
+        public var pointsize: Double?
         
-        return ret
+        func queries() -> [String] {
+            var ret: [String] = []
+            
+            if let title = self.title {
+                ret.append("set title '\(title)'")
+            }
+            
+            if showGrid {
+                ret.append("set grid")
+            }
+            
+            if let xlabel = self.xlabel {
+                ret.append("set xlabel '\(xlabel)'")
+            }
+            if let ylabel = self.ylabel {
+                ret.append("set ylabel '\(ylabel)'")
+            }
+            
+            if let xrange = self.xrange {
+                ret.append("set xrange [\(xrange.0):\(xrange.1)]")
+            }
+            if let yrange = self.yrange {
+                ret.append("set yrange [\(yrange.0):\(yrange.1)]")
+            }
+            
+            if let pointsize = self.pointsize {
+                ret.append("set pointsize \(pointsize)")
+            }
+            
+            return ret
+        }
     }
 }
+
+

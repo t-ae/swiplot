@@ -10,31 +10,32 @@ class SwiplotTests: XCTestCase {
         plot.setting.title = "Swiplot test"
         plot.setting.xlabel = "hoge"
         plot.setting.pointsize = 2
+        plot.setting.showGrid = true
         
         let scatter1 = Graph(x.map { (x: $0[0], y: $0[1]) })
-        scatter1.lineStyle = .points
-        scatter1.title = "scatter1"
-        scatter1.color = .black
-        scatter1.pointSize = 2
+        scatter1.setting.lineStyle = .points
+        scatter1.setting.title = "scatter1"
+        scatter1.setting.color = .black
+        scatter1.setting.pointSize = 2
         plot.addGraph(scatter1)
         
         let scatter2 = Graph(x.map { (x: $0[2], y: $0[3]) })
-        scatter2.lineStyle = .dots
-        scatter2.color = .cyan
-        scatter2.lineWidth = 3
+        scatter2.setting.lineStyle = .dots
+        scatter2.setting.color = .cyan
+        scatter2.setting.lineWidth = 3
         plot.addGraph(scatter2)
         
         let x2 = (0..<50).map { Double($0)/5 }
         let coss = x2.map(cos)
         let line = Graph(x: x2, y: coss)
-        line.lineStyle = .linesPoints
-        line.color = Color(red: 255, green: 0, blue: 0)
+        line.setting.lineStyle = .linesPoints
+        line.setting.color = Graph.Color(red: 255, green: 0, blue: 0)
         plot.addGraph(line)
         
         let sins = x2.map { sin($0) }
         let line2 = Graph(x: x2, y: sins)
-        line2.title = "sin"
-        line2.lineWidth = 3
+        line2.setting.title = "sin"
+        line2.setting.lineWidth = 3
         plot.addGraph(line2)
         
         plot.plot()
