@@ -113,6 +113,14 @@ public struct Scatter: Graph {
         self.color = color
     }
     
+    public init(title: String, x: [Double], y: [Double], color: Color? = nil) {
+        self.init(title: title, data: zip(x, y).map { (x: $0, y: $1) }, color: color)
+    }
+    
+    public init(title: String, values: [Double], color: Color? = nil) {
+        self.init(title: title, data: values.enumerated().map { (x: Double($0), y: $1) }, color: color)
+    }
+    
     public func headerQuery() -> String {
         var ret = "'-' u 1:2 title '\(title)'"
         
@@ -137,6 +145,14 @@ public struct Line: Graph {
         self.title = title
         self.data = data
         self.color = color
+    }
+    
+    public init(title: String, x: [Double], y: [Double], color: Color? = nil) {
+        self.init(title: title, data: zip(x, y).map { (x: $0, y: $1) }, color: color)
+    }
+    
+    public init(title: String, values: [Double], color: Color? = nil) {
+        self.init(title: title, data: values.enumerated().map { (x: Double($0), y: $1) }, color: color)
     }
     
     public func headerQuery() -> String {
