@@ -26,7 +26,7 @@ public class Plot {
         let stderr = Pipe()
         
         func query(_ str: String) {
-            // print(str)
+            print(str)
             let str = str + "\n"
             stdin.fileHandleForWriting.write(str.data(using: .utf8)!)
         }
@@ -64,6 +64,11 @@ public class Plot {
 }
 
 public struct Setting {
+    
+    public var title: String?
+    
+    public var showGrid: Bool = false
+    
     public var xlabel: String?
     public var ylabel: String?
     
@@ -74,6 +79,14 @@ public struct Setting {
     
     func queries() -> [String] {
         var ret: [String] = []
+        
+        if let title = self.title {
+            ret.append("set title '\(title)'")
+        }
+        
+        if showGrid {
+            ret.append("set grid")
+        }
         
         if let xlabel = self.xlabel {
             ret.append("set xlabel '\(xlabel)'")
@@ -95,109 +108,4 @@ public struct Setting {
         
         return ret
     }
-}
-
-public protocol Graph {
-    func headerQuery() -> String
-    func dataQueries() -> [String]
-}
-
-public struct Scatter: Graph {
-    let title: String?
-    let data: [(x: Double, y: Double)]
-    let color: Color?
-    
-    public init(data: [(x: Double, y: Double)], color: Color? = nil, title: String? = nil) {
-        self.title = title
-        self.data = data
-        self.color = color
-    }
-    
-    public init(x: [Double], y: [Double], color: Color? = nil, title: String? = nil) {
-        self.init(data: zip(x, y).map { (x: $0, y: $1) }, color: color, title: title)
-    }
-    
-    public init(values: [Double], color: Color? = nil, title: String? = nil) {
-        self.init(data: values.enumerated().map { (x: Double($0), y: $1) }, color: color, title: title)
-    }
-    
-    public func headerQuery() -> String {
-        
-        var ret = "'-' u 1:2"
-        
-        if let title = self.title {
-            ret += " title '\(title)'"
-        } else {
-            ret += " notitle"
-        }
-        
-        if let color = self.color {
-            ret += " lc rgb '\(color.str)'"
-        }
-        
-        return ret
-    }
-    
-    public func dataQueries() -> [String] {
-        return data.map { x, y in "\(x) \(y)" } + ["e"]
-    }
-}
-
-public struct Line: Graph {
-    let title: String?
-    let data: [(x: Double, y: Double)]
-    let color: Color?
-    
-    init(data: [(x: Double, y: Double)], color: Color? = nil, title: String? = nil) {
-        self.title = title
-        self.data = data
-        self.color = color
-    }
-    
-    public init(x: [Double], y: [Double], color: Color? = nil, title: String? = nil) {
-        self.init(data: zip(x, y).map { (x: $0, y: $1) }, color: color, title: title)
-    }
-    
-    public init(values: [Double], color: Color? = nil, title: String? = nil) {
-        self.init(data: values.enumerated().map { (x: Double($0), y: $1) }, color: color, title: title)
-    }
-    
-    public func headerQuery() -> String {
-        var ret = "'-' u 1:2 w line"
-        
-        if let title = self.title {
-            ret += " title '\(title)'"
-        } else {
-            ret += " notitle"
-        }
-        
-        
-        return ret
-    }
-    
-    public func dataQueries() -> [String] {
-        return data.map { x, y in "\(x) \(y)" } + ["e"]
-    }
-}
-
-public struct Color {
-    let str: String
-    
-    init(_ str: String) {
-        self.str = str
-    }
-    
-    public init(red: UInt8, green: UInt8, blue: UInt8) {
-        self.init(String(format: "#%02x%02x%02x", red, green, blue))
-    }
-}
-
-extension Color {
-    static let red = Color("red")
-    static let green = Color("green")
-    static let blue = Color("blue")
-    static let black = Color("black")
-    static let cyan = Color("cyan")
-    static let magenta = Color("magenta")
-    static let yellow = Color("yellow")
 }

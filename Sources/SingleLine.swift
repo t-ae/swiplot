@@ -1,5 +1,6 @@
 public func plot(_ values: [Double]) {
-    let graph = Line(values: values)
+    let graph = Graph(values)
+    graph.lineStyle = .lines
     
     let plot = Plot()
     
@@ -8,7 +9,8 @@ public func plot(_ values: [Double]) {
 }
 
 public func scatter(_ data: [(x: Double, y: Double)]) {
-    let graph = Scatter(data: data)
+    let graph = Graph(data)
+    graph.lineStyle = .points
     
     let plot = Plot()
     
@@ -17,7 +19,8 @@ public func scatter(_ data: [(x: Double, y: Double)]) {
 }
 
 public func scatter(x: [Double], y: [Double]) {
-    let graph = Scatter(x: x, y: y)
+    let graph = Graph(x: x, y: y)
+    graph.lineStyle = .points
     
     let plot = Plot()
     
