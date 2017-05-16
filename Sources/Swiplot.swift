@@ -103,26 +103,33 @@ public protocol Graph {
 }
 
 public struct Scatter: Graph {
-    let title: String
+    let title: String?
     let data: [(x: Double, y: Double)]
     let color: Color?
     
-    public init(title: String, data: [(x: Double, y: Double)], color: Color? = nil) {
+    public init(data: [(x: Double, y: Double)], color: Color? = nil, title: String? = nil) {
         self.title = title
         self.data = data
         self.color = color
     }
     
-    public init(title: String, x: [Double], y: [Double], color: Color? = nil) {
-        self.init(title: title, data: zip(x, y).map { (x: $0, y: $1) }, color: color)
+    public init(x: [Double], y: [Double], color: Color? = nil, title: String? = nil) {
+        self.init(data: zip(x, y).map { (x: $0, y: $1) }, color: color, title: title)
     }
     
-    public init(title: String, values: [Double], color: Color? = nil) {
-        self.init(title: title, data: values.enumerated().map { (x: Double($0), y: $1) }, color: color)
+    public init(values: [Double], color: Color? = nil, title: String? = nil) {
+        self.init(data: values.enumerated().map { (x: Double($0), y: $1) }, color: color, title: title)
     }
     
     public func headerQuery() -> String {
-        var ret = "'-' u 1:2 title '\(title)'"
+        
+        var ret = "'-' u 1:2"
+        
+        if let title = self.title {
+            ret += " title '\(title)'"
+        } else {
+            ret += " notitle"
+        }
         
         if let color = self.color {
             ret += " lc rgb '\(color.str)'"
@@ -137,30 +144,33 @@ public struct Scatter: Graph {
 }
 
 public struct Line: Graph {
-    let title: String
+    let title: String?
     let data: [(x: Double, y: Double)]
     let color: Color?
     
-    init(title: String, data: [(x: Double, y: Double)], color: Color? = nil) {
+    init(data: [(x: Double, y: Double)], color: Color? = nil, title: String? = nil) {
         self.title = title
         self.data = data
         self.color = color
     }
     
-    public init(title: String, x: [Double], y: [Double], color: Color? = nil) {
-        self.init(title: title, data: zip(x, y).map { (x: $0, y: $1) }, color: color)
+    public init(x: [Double], y: [Double], color: Color? = nil, title: String? = nil) {
+        self.init(data: zip(x, y).map { (x: $0, y: $1) }, color: color, title: title)
     }
     
-    public init(title: String, values: [Double], color: Color? = nil) {
-        self.init(title: title, data: values.enumerated().map { (x: Double($0), y: $1) }, color: color)
+    public init(values: [Double], color: Color? = nil, title: String? = nil) {
+        self.init(data: values.enumerated().map { (x: Double($0), y: $1) }, color: color, title: title)
     }
     
     public func headerQuery() -> String {
-        var ret = "'-' u 1:2 w line title '\(title)'"
+        var ret = "'-' u 1:2 w line"
         
-        if let color = self.color {
-            ret += " lc rgb '\(color.str)'"
+        if let title = self.title {
+            ret += " title '\(title)'"
+        } else {
+            ret += " notitle"
         }
+        
         
         return ret
     }

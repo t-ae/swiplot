@@ -12,13 +12,13 @@ class SwiplotTests: XCTestCase {
         
         
         
-        let scatter1 = Scatter(title: "scatter1", data: x.map { (x: $0[0], y: $0[1]) }, color: .black)
+        let scatter1 = Scatter(data: x.map { (x: $0[0], y: $0[1]) }, color: .black, title: "scatter1")
         plot.addGraph(scatter1)
         
-        let scatter2 = Scatter(title: "scatter2", data: x.map { (x: $0[2], y: $0[3]) }, color: .cyan)
+        let scatter2 = Scatter(data: x.map { (x: $0[2], y: $0[3]) }, color: .cyan)
         plot.addGraph(scatter2)
         
-        let line = Line(title: "line", data: [(0, 0), (1, 2), (2, 1), (3, 3)], color: .red)
+        let line = Line(data: [(0, 0), (1, 2), (2, 1), (3, 3)], color: .red)
         plot.addGraph(line)
         
         plot.plot()
