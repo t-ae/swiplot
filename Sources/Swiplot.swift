@@ -26,7 +26,7 @@ public class Plot {
         let stderr = Pipe()
         
         func query(_ str: String) {
-            print(str)
+            // print(str)
             let str = str + "\n"
             stdin.fileHandleForWriting.write(str.data(using: .utf8)!)
         }

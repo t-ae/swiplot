@@ -10,8 +10,6 @@ class SwiplotTests: XCTestCase {
         plot.setting.xlabel = "hoge"
         plot.setting.pointsize = 2
         
-        
-        
         let scatter1 = Scatter(data: x.map { (x: $0[0], y: $0[1]) }, color: .black, title: "scatter1")
         plot.addGraph(scatter1)
         
@@ -20,6 +18,11 @@ class SwiplotTests: XCTestCase {
         
         let line = Line(data: [(0, 0), (1, 2), (2, 1), (3, 3)], color: .red)
         plot.addGraph(line)
+        
+        let x2 = (0..<1000).map { Double($0)/100 }
+        let y2 = x2.map { sin($0) }
+        let line2 = Line(x: x2, y: y2, title: "sin")
+        plot.addGraph(line2)
         
         plot.plot()
     }
