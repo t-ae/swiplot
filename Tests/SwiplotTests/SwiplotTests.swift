@@ -8,7 +8,7 @@ class SwiplotTests: XCTestCase {
         
         plot.setting.xrange = (-10, 10)
         plot.setting.xlabel = "hoge"
-        plot.setting.pointsize = 3
+        plot.setting.pointsize = 2
         
         let scatter1 = Scatter(title: "scatter1", data: [(1, 2), (2, 1), (3, 5), (4, 1), (2, 3)], color: .black)
         plot.addGraph(scatter1)

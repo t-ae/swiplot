@@ -125,7 +125,7 @@ public struct Scatter: Graph {
         var ret = "'-' u 1:2 title '\(title)'"
         
         if let color = self.color {
-            ret += " lc rgb '\(color)'"
+            ret += " lc rgb '\(color.str)'"
         }
         
         return ret
@@ -159,7 +159,7 @@ public struct Line: Graph {
         var ret = "'-' u 1:2 w line title '\(title)'"
         
         if let color = self.color {
-            ret += " lc rgb '\(color)'"
+            ret += " lc rgb '\(color.str)'"
         }
         
         return ret
@@ -170,12 +170,24 @@ public struct Line: Graph {
     }
 }
 
-public enum Color: String {
-    case red = "red"
-    case green = "green"
-    case blue = "blue"
-    case black = "black"
-    case cyan = "cyan"
-    case magenta = "magenta"
-    case yellow = "yellow"
+public struct Color {
+    let str: String
+    
+    init(_ str: String) {
+        self.str = str
+    }
+    
+    public init(red: UInt8, green: UInt8, blue: UInt8) {
+        self.init(String(format: "#%02x%02x%02x", red, green, blue))
+    }
+}
+
+extension Color {
+    static let red = Color("red")
+    static let green = Color("green")
+    static let blue = Color("blue")
+    static let black = Color("black")
+    static let cyan = Color("cyan")
+    static let magenta = Color("magenta")
+    static let yellow = Color("yellow")
 }
