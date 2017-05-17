@@ -19,7 +19,7 @@ public class Graph {
     
     public func headerQuery() -> String {
         
-        var ret = "'-' u 1:2 w \(setting.lineStyle.rawValue)"
+        var ret = "'-' w \(setting.lineStyle.rawValue)"
         
         if let lineType = self.setting.lineType {
             ret += " lt \(lineType)"

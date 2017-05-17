@@ -7,6 +7,7 @@ class SwiplotTests: XCTestCase {
         let plot = Plot()
         
         plot.setting.xrange = (-1, 10)
+        plot.setting.terminal = "x11"
         plot.setting.title = "Swiplot test"
         plot.setting.xlabel = "hoge"
         plot.setting.pointsize = 2
@@ -39,11 +40,13 @@ class SwiplotTests: XCTestCase {
         plot.addGraph(line2)
         
         plot.plot()
+        print("after")
     }
     
     func test3D() {
         let plot = Plot3D()
         
+        plot.setting.terminal = "x11"
         plot.setting.title = "Swiplot 3D"
         plot.setting.xlabel = "x"
         plot.setting.ylabel = "y"
@@ -63,6 +66,8 @@ class SwiplotTests: XCTestCase {
         plot.addGraph(line)
         
         plot.plot()
+        
+        print("after")
     }
     
     let x = [

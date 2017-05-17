@@ -18,7 +18,7 @@ public class Plot {
             process.environment!["PATH"] = "/usr/local/bin:" + process.environment!["PATH"]!
             process.launchPath = "/usr/bin/env"
             
-            process.arguments = ["gnuplot", "-persist"]
+            process.arguments = ["gnuplot", "-p"]
         }
         
         let stdin = Pipe()
@@ -48,14 +48,13 @@ public class Plot {
             query(q)
         }
         
-        let header = "plot " + graphs.map { $0.headerQuery() }.joined(separator: ", ")
+        let header = "plot " + graphs.map { $0.headerQuery() }.joined(separator: ", ") + "; pause mouse close; exit"
         query(header)
         for graph in graphs {
             for q in graph.dataQueries() {
                 query(q)
             }
         }
-        query("exit")
     }
     
     public func addGraph(_ graph: Graph) {
@@ -65,6 +64,8 @@ public class Plot {
 
 extension Plot {
     public struct Setting {
+        
+        public var terminal: String?
         
         public var title: String?
         
@@ -80,6 +81,10 @@ extension Plot {
         
         func queries() -> [String] {
             var ret: [String] = []
+            
+            if let terminal = self.terminal {
+                ret.append("set term '\(terminal)'")
+            }
             
             if let title = self.title {
                 ret.append("set title '\(title)'")
