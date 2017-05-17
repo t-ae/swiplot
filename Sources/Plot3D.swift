@@ -12,7 +12,7 @@ public class Plot3D {
         
         if let gnuplotPath = gnuplotPath {
             process.launchPath = gnuplotPath
-            process.arguments = ["-persist"]
+            process.arguments = ["-p"]
         } else {
             process.environment = ProcessInfo.processInfo.environment
             process.environment!["PATH"] = "/usr/local/bin:" + process.environment!["PATH"]!
