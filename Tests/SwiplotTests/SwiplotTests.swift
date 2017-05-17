@@ -29,7 +29,7 @@ class SwiplotTests: XCTestCase {
         let coss = x2.map(cos)
         let line = Graph(x: x2, y: coss)
         line.setting.lineStyle = .linesPoints
-        line.setting.color = Graph.Color(red: 255, green: 0, blue: 0)
+        line.setting.color = Color(red: 255, green: 0, blue: 0)
         plot.addGraph(line)
         
         let sins = x2.map { sin($0) }
@@ -37,6 +37,30 @@ class SwiplotTests: XCTestCase {
         line2.setting.title = "sin"
         line2.setting.lineWidth = 3
         plot.addGraph(line2)
+        
+        plot.plot()
+    }
+    
+    func test3D() {
+        let plot = Plot3D()
+        
+        plot.setting.title = "Swiplot 3D"
+        plot.setting.xlabel = "x"
+        plot.setting.ylabel = "y"
+        plot.setting.zlabel = "z"
+        
+        let scatter = Graph3D(x.map { ($0[0], $0[1], $0[2]) })
+        scatter.setting.lineStyle = .points
+        scatter.setting.title = "Iris"
+        scatter.setting.color = .red
+        plot.addGraph(scatter)
+        
+        let x2 = (0..<50).map { Double($0)/5 }
+        let y = x2.map(cos)
+        let z = x2.map(sin)
+        let line = Graph3D(x: x2, y: y, z: z)
+        line.setting.lineStyle = .lines
+        plot.addGraph(line)
         
         plot.plot()
     }

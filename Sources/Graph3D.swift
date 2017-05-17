@@ -1,25 +1,21 @@
 
-public class Graph {
+public class Graph3D {
     
-    let data: [(x: Double, y: Double)]
+    let data: [(x: Double, y: Double, z: Double)]
     var setting: Setting
     
-    public init(_ data: [(x: Double, y: Double)]) {
+    public init(_ data: [(x: Double, y: Double, z: Double)]) {
         self.data = data
         self.setting = Setting()
     }
     
-    public convenience init(x: [Double], y: [Double]) {
-        self.init([(Double, Double)](zip(x, y)))
-    }
-    
-    public convenience init(_ values: [Double]) {
-        self.init(values.enumerated().map { (Double($0), $1) })
+    public convenience init(x: [Double], y: [Double], z: [Double]) {
+        self.init(zip(zip(x, y), z).map { ($0.0, $0.1, $1) })
     }
     
     public func headerQuery() -> String {
         
-        var ret = "'-' u 1:2 w \(setting.lineStyle.rawValue)"
+        var ret = "'-' w \(setting.lineStyle.rawValue)"
         
         if let lineType = self.setting.lineType {
             ret += " lt \(lineType)"
@@ -53,11 +49,11 @@ public class Graph {
     }
     
     public func dataQueries() -> [String] {
-        return data.map { x, y in "\(x) \(y)" } + ["e"]
+        return data.map { x, y, z in "\(x) \(y) \(z)" } + ["e"]
     }
 }
 
-extension Graph {
+extension Graph3D {
     struct Setting {
         var title: String?
         var color: Color?
