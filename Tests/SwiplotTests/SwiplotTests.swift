@@ -65,9 +65,17 @@ class SwiplotTests: XCTestCase {
         line.setting.lineStyle = .lines
         plot.addGraph(line)
         
+        let line2 = Graph3D(x: x2, y: y.map(-), z: z.map(-))
+        line2.setting.lineStyle = .linesPoints
+        plot.addGraph(line2)
+        
         plot.plot()
         
         print("after")
+    }
+    
+    func testSingleLine() {
+        scatter(x.map { ($0[0], $0[1], $0[2]) })
     }
     
     let x = [
